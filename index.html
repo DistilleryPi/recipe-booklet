@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Recipe Booklet</title>
+  <meta name="description" content="Turn saved recipes into a booklet you can print and fold.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Recipes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#f2f2f7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="style.css">
+  <script src="vendor/pdf-lib.min.js"></script>
+  <script src="engine.js"></script>
+  <script type="module" src="app.js"></script>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Recipe Booklet</h1>
+    <p class="sub">Turn saved recipes into a booklet you can print and fold.</p>
+  </header>
+
+  <div id="install" class="card notice" hidden>
+    <strong>Install on your iPhone</strong>
+    <p>Tap the Share button <span class="share-glyph" aria-hidden="true"></span> then <b>Add to Home Screen</b>.
+      It will then open like an app and work offline.</p>
+    <button id="installClose" class="link">Not now</button>
+  </div>
+
+  <h2>Recipes</h2>
+  <section class="card">
+    <ul id="items" class="items"></ul>
+    <p id="empty" class="empty">Add a PDF saved from a recipe website,<br>or paste a recipe from an Instagram caption.</p>
+    <div class="actions">
+      <button id="addPdf" class="btn"><span class="plus">+</span> Add PDF</button>
+      <button id="addText" class="btn"><span class="plus">+</span> Paste recipe text</button>
+    </div>
+    <input id="file" type="file" accept="application/pdf,.pdf" multiple hidden>
+  </section>
+
+  <h2>Text colour</h2>
+  <section class="card">
+    <div class="swatches" id="swatches"></div>
+    <label class="row"><span>Change text colour</span><input type="checkbox" class="switch" id="recolour"></label>
+    <label class="row"><span>Only black and grey text<small>Leaves links and coloured headings as they are. (PDFs only.)</small></span>
+      <input type="checkbox" class="switch" id="onlyDark"></label>
+  </section>
+
+  <h2>Layout</h2>
+  <section class="card">
+    <div class="row"><div class="seg wide" id="layout"><button data-v="booklet">Booklet</button><button data-v="2up">Side by side</button></div></div>
+    <p class="hint" id="layoutHint"></p>
+    <div class="row"><span>Paper size</span><div class="seg" id="paper"><button data-v="Letter">Letter</button><button data-v="A4">A4</button></div></div>
+    <label class="row"><span>Trim white margins<small>Makes recipe text a little bigger.</small></span><input type="checkbox" class="switch" id="trim"></label>
+    <label class="row" id="flipRow"><span>Flip back pages<small>Turn on if the backs print upside down.</small></span><input type="checkbox" class="switch" id="flipBacks"></label>
+  </section>
+
+  <h2>Preview <span id="busy" class="busy"></span></h2>
+  <section id="preview" class="preview"><p class="empty">Your booklet preview will appear here.</p></section>
+</main>
+
+<footer class="bar">
+  <div id="status" class="status">Add a recipe to get started.</div>
+  <div class="bar-buttons">
+    <button id="save" class="secondary" disabled>Save to Files</button>
+    <button id="share" class="primary" disabled>Print</button>
+  </div>
+</footer>
+<div id="tip" class="tip" hidden></div>
+
+<div id="sheet" class="backdrop" hidden>
+  <div class="sheet" role="dialog" aria-labelledby="sheetTitle">
+    <div class="sheet-head">
+      <button id="sheetCancel" class="link">Cancel</button>
+      <strong id="sheetTitle">Paste recipe</strong>
+      <button id="sheetDone" class="link bold">Add</button>
+    </div>
+    <textarea id="recipeText" placeholder="Paste the recipe here.&#10;&#10;The first line becomes the title. Emojis and hashtags are removed."></textarea>
+    <button id="pasteBtn" class="btn">Paste from clipboard</button>
+  </div>
+</div>
+</body>
+</html>
